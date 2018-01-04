@@ -1,0 +1,513 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Drawing;
+
+namespace ConsoleApplication11
+{
+    public class TicTacToe
+    {
+        public String[] players=new String[2];
+        void start()
+        {
+            //Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.ForegroundColor = ConsoleColor.Blue;
+            for (int i = 0; i <= 167; i++)
+                Console.Write("*");
+            Console.ForegroundColor = ConsoleColor.Red;
+            for (int i = 0; i <= 167; i++)
+                Console.Write("$");
+           /* Console.SetCursorPosition(0,42);
+            for (int i = 0; i <= 167; i++)
+                Console.Write("$");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            for (int i = 0; i <= 167; i++)
+                Console.Write("*");
+            //Console.SetCursorPosition(90,4);
+            //Console.ReadLine();*/
+            Console.Write("\n\t\t\t\t\t\t\t\t\t  ");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            //Console.SetCursorPosition(50,6);
+            Console.WriteLine("TIC TAC TOE");
+            Console.Write("\n\t\t\t\t\t\t\t\t  ");
+            Console.Write("Please Enter Names of Players\n\t\t\t\t\t\t\t\t  Player 1 : ");
+            players[0] = Console.ReadLine();
+            Console.Write("\t\t\t\t\t\t\t\t  ");
+            Console.Write("Player 2 : ");
+            players[1]= Console.ReadLine();
+            Console.Write("\n\t\t\t\t\t\t\t  ");
+            Console.WriteLine("Type Box Number to Enter Your Choice        ------->        ");
+            Console.SetCursorPosition(58,14);
+            Console.Write("First Chance is swapped after every game.");
+            int val = 0;
+            TicTacToe d1 = new TicTacToe();
+            Console.SetCursorPosition(0, 42);
+            Console.ForegroundColor = ConsoleColor.Red;
+            for (int i = 0; i <= 167; i++)
+                Console.Write("$");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            for (int i = 0; i <= 167; i++)
+                Console.Write("*");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.SetCursorPosition(123, 9);
+            d1.des1();
+            Console.SetCursorPosition(123, 10);
+            d1.des2(val);
+            Console.SetCursorPosition(123, 11);
+            d1.des3();
+            Console.SetCursorPosition(123, 12);
+            d1.des1();
+            Console.SetCursorPosition(123, 13);
+            d1.des2(val+3);
+            Console.SetCursorPosition(123, 14);
+            d1.des3();
+            Console.SetCursorPosition(123, 15);
+            d1.des1();
+            Console.SetCursorPosition(123, 16);
+            d1.des2(val+6);
+            Console.SetCursorPosition(123, 17);
+            d1.des1();
+        }
+        void des3()
+        {
+            Console.Write("_____|_____|_____");
+        }
+        void des2(int x)
+        {
+            Console.Write("  {0}  |", x + 1);
+            Console.Write("  {0}  |", x + 2);
+            Console.Write("  {0}", x + 3);
+        }
+        void des1()
+        {
+            Console.Write("     |     | ");
+        }
+        public void play()
+        {
+            int[] gval = new int[9];
+            int rtype;
+            int[] result = new int[3];
+            int chance = 1, choice;// winner = 0, fwinner = 0 ;
+            //gval[0] = 1;
+            //gval[2] = 2;
+            //Console.Write("{0} {1}",gval[0],gval[2]);
+            here:
+            for (int i = 0; i < 9; i++)
+                gval[i] = 0;
+            TicTacToe g = new TicTacToe();
+            g.grid(ref gval);
+            Console.SetCursorPosition(138, 20);
+            Console.Write("SCORE");
+            Console.SetCursorPosition(126,21);
+            Console.Write("--------------------------------");
+            Console.SetCursorPosition(122, 22);
+            //Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write(" {0}", players[0]);
+            Console.SetCursorPosition(138, 22);
+            Console.Write("DRAWS");
+            Console.SetCursorPosition(148,22);
+            Console.Write(" {0}", players[1]);
+            g.score(ref result);
+            rtype=0;
+            for (int i = 0; i < 9; i++)
+            {
+                Console.SetCursorPosition(23, 20);
+                Console.Write("                            ");
+                Console.SetCursorPosition(7, 20);
+                Console.Write("CHANCE  --->   ");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write("{0}", players[chance - 1]);
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.SetCursorPosition(7, 22);
+                Console.Write("Enter Choice ---> ");
+                //Console.SetCursorPosition(26,22);
+                choice = Convert.ToInt32(Console.ReadLine());
+                Console.SetCursorPosition(7, 23);
+                Console.Write("                                       ");
+                Console.SetCursorPosition(25, 22);
+                Console.Write("   ");
+                if (gval[choice-1] == 0)
+                {
+                    if(chance==1)
+                    {
+                        gval[choice-1]=1;
+                    }
+                    else
+                    {
+                        gval[choice-1]=2;
+                    }
+                   /* if(chance==1)
+                        Console.ForegroundColor=ConsoleColor.Blue;
+                    else
+                        Console.ForegroundColor=ConsoleColor.Red;
+                    */g.grid(ref gval);
+                    Console.ForegroundColor=ConsoleColor.Cyan;
+                }
+                else
+                {
+                    i=i-1;
+                    if (chance == 1)
+                        chance = 2;
+                    else
+                        chance = 1;
+                    Console.ForegroundColor=ConsoleColor.DarkMagenta;
+                    Console.SetCursorPosition(7,23);
+                    Console.Write("Don't Overwrite,Please Enter Again!!!");
+                    Console.SetCursorPosition(26,22);
+                    Console.Write(" ");
+                    Console.ForegroundColor=ConsoleColor.Cyan;
+                }
+                if(i>=4)
+                {
+                    if (gval[0] == gval[1] && gval[1] == gval[2] && gval[1] != 0)
+                    {
+                        rtype = 1;
+                        break;
+                    }
+                    else if (gval[3] == gval[4] && gval[4] == gval[5] && gval[4] != 0)
+                    {
+                        rtype = 2;
+                        break;
+                    }
+                    else if (gval[6] == gval[7] && gval[7] == gval[8] && gval[7] != 0)
+                    {
+                        rtype = 3;
+                        break;
+                    }
+                    else if (gval[0] == gval[3] && gval[3] == gval[6] && gval[3] != 0)
+                    {
+                        rtype = 4;
+                        break;
+                    }
+                    else if (gval[1] == gval[4] && gval[4] == gval[7] && gval[4] != 0)
+                    {
+                        rtype = 5;
+                        break;
+                    }
+                    else if (gval[2] == gval[5] && gval[5] == gval[8] && gval[5] != 0)
+                    {
+                        rtype = 6;
+                        break;
+                    }
+                    else if (gval[0] == gval[4] && gval[4] == gval[8] && gval[4] != 0)
+                    {
+                        rtype = 7;
+                        break;
+                    }
+                    else if (gval[2] == gval[4] && gval[4] == gval[6] && gval[4] != 0)
+                    {
+                        rtype = 8;
+                        break;
+                    }
+                }
+                if(chance==1)
+                    chance=2;
+                else
+                    chance=1;
+            }
+            if (chance == 1)
+                chance = 2;
+            else
+                chance = 1;
+            if (rtype == 0)
+            {
+                if (chance == 1)
+                    chance = 2;
+                else
+                    chance = 1;
+                Console.SetCursorPosition(120, 30);
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write("DRAW!!!!");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+            }
+            else
+            {
+                Console.SetCursorPosition(120, 30);
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write("{0} WINS !!!!!", players[(chance%2)]);
+                if(chance==1)
+                {
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                }
+                if (rtype == 1)
+                {
+                    Console.SetCursorPosition(50, 21);
+                    Console.Write("_________");
+                    Console.SetCursorPosition(60, 21);
+                    Console.Write("_________");
+                    Console.SetCursorPosition(70, 21);
+                    Console.Write("_________");
+                    Console.SetCursorPosition(50, 22);
+                    Console.Write("____");
+                    Console.SetCursorPosition(55, 22);
+                    Console.Write("____");
+                    Console.SetCursorPosition(60, 22);
+                    Console.Write("____");
+                    Console.SetCursorPosition(65, 22);
+                    Console.Write("____");
+                    Console.SetCursorPosition(70, 22);
+                    Console.Write("____");
+                    Console.SetCursorPosition(75, 22);
+                    Console.Write("____");
+                }
+                else if (rtype == 2)
+                {
+                    Console.SetCursorPosition(50, 26);
+                    Console.Write("_________");
+                    Console.SetCursorPosition(60, 26);
+                    Console.Write("_________");
+                    Console.SetCursorPosition(70, 26);
+                    Console.Write("_________");
+                    Console.SetCursorPosition(50, 27);
+                    Console.Write("____");
+                    Console.SetCursorPosition(55, 27);
+                    Console.Write("____");
+                    Console.SetCursorPosition(60, 27);
+                    Console.Write("____");
+                    Console.SetCursorPosition(65, 27);
+                    Console.Write("____");
+                    Console.SetCursorPosition(70, 27);
+                    Console.Write("____");
+                    Console.SetCursorPosition(75, 27);
+                    Console.Write("____");
+                }
+                else if (rtype == 3)
+                {
+                    Console.SetCursorPosition(50, 31);
+                    Console.Write("_________");
+                    Console.SetCursorPosition(60, 31);
+                    Console.Write("_________");
+                    Console.SetCursorPosition(70, 31);
+                    Console.Write("_________");
+                    Console.SetCursorPosition(50, 32);
+                    Console.Write("____");
+                    Console.SetCursorPosition(55, 32);
+                    Console.Write("____");
+                    Console.SetCursorPosition(60, 32);
+                    Console.Write("____");
+                    Console.SetCursorPosition(65, 32);
+                    Console.Write("____");
+                    Console.SetCursorPosition(70, 32);
+                    Console.Write("____");
+                    Console.SetCursorPosition(75, 32);
+                    Console.Write("____");
+                }
+                else if (rtype == 4)
+                {
+                    int c = 54, r = 20;
+                    for (int i = 0; i < 15; i++)
+                    {
+                        Console.SetCursorPosition(c-1,r);
+                        Console.Write("|");
+                        Console.SetCursorPosition(c + 1, r);
+                        Console.Write("|");
+                        r++;
+                    }
+                }
+                else if (rtype == 5)
+                {
+                    int c = 64, r = 20;
+                    for (int i = 0; i < 15; i++)
+                    {
+                        Console.SetCursorPosition(c - 1, r);
+                        Console.Write("|");
+                        Console.SetCursorPosition(c + 1, r);
+                        Console.Write("|");
+                        r++;
+                    }
+                }
+                else if (rtype == 6)
+                {
+                    int c = 74, r = 20;
+                    for (int i = 0; i < 15; i++)
+                    {
+                        Console.SetCursorPosition(c - 1, r);
+                        Console.Write("|");
+                        Console.SetCursorPosition(c + 1, r);
+                        Console.Write("|");
+                        r++;
+                    }
+                }
+                else if (rtype == 7)
+                {
+                    int c = 49, r = 20;
+                    for (int i = 0; i < 15; i++)
+                    {
+                        Console.SetCursorPosition(c, r);
+                        Console.Write("\\");
+                        Console.SetCursorPosition(c+2,r);
+                        Console.Write("\\");
+                        c = c + 2;
+                        r = r + 1;
+                    }
+                }
+                else if(rtype==8)
+                {
+                    int c = 79, r = 20;
+                    for (int i = 0; i < 15; i++)
+                    {
+                        Console.SetCursorPosition(c, r);
+                        Console.Write("/");
+                        Console.SetCursorPosition(c - 2, r);
+                        Console.Write("/");
+                        c = c - 2;
+                        r = r + 1;
+                    }
+                }
+                Console.ForegroundColor = ConsoleColor.Cyan;
+            }
+            if (rtype == 0)
+                result[2]++;
+            else if (chance == 2)
+                result[0]++;
+            else
+                result[1]++;
+            g.score(ref result);
+            String more;
+            Console.SetCursorPosition(115,33);
+            Console.Write("PRESS 'Y' TO PLAY ONE MORE GAME : ");
+            more=Console.ReadLine();
+            Console.SetCursorPosition(120, 30);
+            Console.Write("                                         ");
+            Console.SetCursorPosition(115, 33);
+            Console.Write("                                         ");
+            if (more[0] == 'y' || more[0] == 'Y')
+                goto here;
+            Console.SetCursorPosition(80, 33);
+            Console.Write("                                         ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            String str;
+            if (result[0] == result[1])
+                str="MATCH ENDS IN A DRAW !!!!!!!!";
+            else if (result[0] > result[1])
+            {
+                str = players[0];
+                str += " WINS THE MATCH";
+            }
+            else
+            {
+                str = players[1];
+                str+=" WINS THE MATCH";
+            }
+            Console.Write(str);
+            }
+        void score(ref int[] res)
+        {
+            Console.SetCursorPosition(125, 24);
+            Console.Write("                                                                   ");
+            Console.SetCursorPosition(125, 24);
+            Console.Write("{0}",res[0]);
+            Console.SetCursorPosition(141, 24);
+            Console.Write("{0}",res[2]);
+            Console.SetCursorPosition(154,24);
+            Console.Write("{0}", res[1]);
+        }
+        public void grid(ref int [] ar)
+        {
+            TicTacToe d2 = new TicTacToe();
+            //Console.Write("bgh{0} {1} {2}", gval[0],gval[1],gval[2]);
+            Console.SetCursorPosition(48,20);
+            d2.de1();
+            Console.SetCursorPosition(48, 21);
+            d2.de1();
+            Console.SetCursorPosition(50, 22);
+            d2.de2(ref ar,0);
+            Console.SetCursorPosition(48,23);
+            d2.de1();
+            Console.SetCursorPosition(50,24);
+            d2.de3();
+            Console.SetCursorPosition(48, 25);
+            d2.de1();
+            Console.SetCursorPosition(48, 26);
+            d2.de1();
+            Console.SetCursorPosition(50, 27);
+            d2.de2(ref ar, 3);
+            Console.SetCursorPosition(48, 28);
+            d2.de1();
+            Console.SetCursorPosition(50, 29);
+            d2.de3();
+            Console.SetCursorPosition(48, 30);
+            d2.de1();
+            Console.SetCursorPosition(48, 31);
+            d2.de1();
+            Console.SetCursorPosition(50, 32);
+            d2.de2(ref ar, 6);
+            Console.SetCursorPosition(48, 33);
+            d2.de1();
+            Console.SetCursorPosition(48, 34);
+            d2.de1();
+        }
+        void de1()
+        {
+            Console.Write("           |         |           ");
+        }
+        public void de2(ref int[] arr,int pos)
+        {
+            //Console.Write("{0}", pos);
+            TicTacToe che = new TicTacToe();
+            Console.Write("    ");
+           /* if (arr[pos] == 0)
+                Console.Write(" ");
+            else if (arr[pos]== 1)
+                Console.Write("X");
+            else
+                Console.Write("O");
+            //*/che.check(ref arr[pos]);
+            Console.Write("    |");
+            Console.Write("    ");
+            /*if (arr[pos+1] == 0)
+                Console.Write(" ");
+            else if (arr[pos+1] == 1)
+                Console.Write("X");
+            else
+                Console.Write("O");
+            //*/che.check(ref arr[pos + 1]);
+            Console.Write("    |    ");
+            /*if (arr[pos+2] == 0)
+                Console.Write(" ");
+            else if (arr[pos+2] == 1)
+                Console.Write("X");
+            else
+                Console.Write("O");
+            //*/che.check(ref arr[pos + 2]);
+                Console.Write("     ");
+        }
+        void de3()
+        {
+            Console.Write("_________|_________|_________ ");
+        }
+        void check(ref int var)
+        {
+            if (var == 0)
+                Console.Write(" ");
+            else if (var == 1)
+                Console.Write("X");
+            else
+                Console.Write("O");
+        }
+        void display()
+        {
+            TicTacToe ne = new  TicTacToe();
+            ne.start();
+            ne.play();
+           Console.ReadLine();
+        
+        }
+        static void Main(string[] args)
+        {
+            //Console.BackgroundColor = ConsoleColor.DarkYellow;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("\t\t\t\t\tPLEASE MAXIMIZE THIS WINDOW");
+            Console.WriteLine("\n");
+            TicTacToe n = new TicTacToe();
+            n.display();
+        }
+        
+    }
+}
