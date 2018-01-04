@@ -1,0 +1,138 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Drawing;
+using System.Windows.Forms;
+namespace ConsoleApplication13
+{
+    class master
+    {
+        void score(ref int [] a)
+    {
+        Console.SetCursorPosition(110,15);
+        Console.Write("---------SCORE--------");
+        Console.SetCursorPosition(110, 18);
+        Console.Write("PLAYER 1     PLAYER 2");
+        Console.SetCursorPosition(100,21);
+        Console.Write("              {0}           {1}", a[0], a[1]);
+    }
+        int valid(ref String s,ref String [] w)
+        {
+            int j;
+            for(j=0;j<90;j++)
+            {
+                if(w[j]==s)
+                    break;
+            }
+            if(j<90)
+                return 1;
+            else
+                return 0;
+        }
+        int pres(ref String s,ref String [] w,ref int []ar)
+        {
+            int j;
+            for(j=0;j<90;j++)
+            {
+                if(s==w[j])
+                    break;
+            }
+            if(ar[j]==0)
+                return 1;
+            else
+                return 0;
+        }
+        void mark(ref String s,ref int [] ar,ref String [] w)
+        {
+            int j;
+            for(j=0;j<90;j++)
+            {
+                if(s==w[j])
+                break;
+            }
+            ar[j]=1;
+        }
+        static void Main(string[] args)
+        {
+            String[] words = new String[90] {"are","ares","arm","armet","armets","arms","ars","art","arts","aster","ate","ear",
+"ears","east","eat","eats","ems","era","eras","eta","etas","mar","mare","mares","mars","mart","marts","mas","mast","master","mat",
+"mate","mater","maters","mates","mats","meat","meats","mesa","met","ram","rams","rat","rate","rates","rats","ream","reams","reast",
+"resat","rest","same","sat","sate","sea","seam","sear","seat","sera","set","seta","smart","smear","star","stare","steam","stem",
+"stream","tam","tame","tamer","tamers","tames","tams","tar","tare","tares","tars","taser","tea","team","teams","tear","tears",
+"teas","term","terms","tram","trams","tsar" };
+            int[] presence = new int[90];
+            int []arr=new int[2];
+            String str;
+            int k,m,x=10;
+            master n = new master();
+            Console.Write("\n\n\t\t\t WORD'S GAME\n\n\t\t\t POINTS ARE AWARDED BASED ON LENGTH OF VALID ENGLISH WORDS\n\n\t\t\t 5 CHANCES ARE PROVIDED TO EACH PLAYER\n");
+            Console.Write("\n\t\t\t LETTERS ARE ---->   A E M R S T \n");
+            for(int i=0;i<10;i++)
+            {
+                //x = Cursor.Position.X;
+                //y = Cursor.Position.Y;
+                n.score(ref arr);
+                //Console.Write("{0}  {1}", Cursor.Position.X, Cursor.Position.Y);
+                Console.SetCursorPosition(25,x);
+                if(i%2==0)
+                {
+                    Console.Write("{0}. PLAYER 1 ---->  ",i+1);
+                    str=Console.ReadLine();
+                    //Console.SetCursorPosition(25, x++);
+                    k=n.valid(ref str,ref words);
+                    Console.SetCursorPosition(55, x);
+                    if(k==1)
+                    {
+                        m=n.pres(ref str,ref words,ref presence);
+                        if(m==1)
+                        {
+                            arr[0]+=str.Length;
+                            Console.Write("{0} points awarded\n",str.Length);
+                            n.mark(ref str,ref presence,ref words);
+                        }
+                        else
+                            Console.Write("Word already used \n");
+                    }
+                    else
+                        Console.Write("Invalid Word\n");
+                }
+                else
+                {
+                    Console.Write("{0}. PLAYER 2 ---->  ",i+1);
+                    str=Console.ReadLine();
+                    k=n.valid(ref str,ref words);
+                    Console.SetCursorPosition(55, x);
+                    if(k==1)
+                    {
+                        m=n.pres(ref str,ref words,ref presence);
+                        if(m==1)
+                        {
+                            arr[1]+=str.Length;
+                            Console.Write("{0} points awarded\n",str.Length);
+                            n.mark(ref str,ref presence,ref words);
+                        }
+                        else
+                            Console.Write("Word already used \n");
+                    }
+                    else
+                        Console.Write("Invalid Word\n");
+                }
+                x = x + 2;
+
+            }
+            n.score(ref arr);
+            Console.SetCursorPosition(110, 35);
+            Console.ForegroundColor = ConsoleColor.Green;
+            if (arr[0] > arr[1])
+                Console.Write("PLAYER 1 WINS!!!!!!");
+            else if (arr[1] > arr[0])
+                Console.Write("PLAYER 2 WINS!!!!!!");
+            else
+                Console.Write("DRAW!!!!!!!");
+            Console.ReadLine();
+
+        }
+    }
+}
